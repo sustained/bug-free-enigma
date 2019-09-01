@@ -92,13 +92,15 @@ client.on("message", msg => {
     .then(() => dumpJson(msg.guild, msg))
 });
 
-async function onFileWritten(error, msg) {
+async function onFileWritten(error, msg, startTime) {
   if (error) {
     console.error(error);
     return msg.reply("An error occured while writing the JSON to disc, please check the console.");
   }
 
-  await msg.reply(`Written to disc as ${OUTPUT_JSON_FILENAME}. Thank you for flying with Sustained Airways.`);
+  const timeTaken = (process.hrtime(startTime)[1] / 1000000) + "ms";
+
+  await msg.reply(`Wrote ${OUTPUT_JSON_FILENAME} in ${timeTaken}. Thank you for flying with Sustained Airways.`);
 
   client.destroy();
 }
@@ -121,6 +123,8 @@ function dumpJson(guild, msg) {
     return console.error("Discord outage!");
   }
 
+  const startTime = process.hrtime();
+
   const outputJson = [];
   
   const relevantMembers = guild.members.filter((member) => {
@@ -134,7 +138,7 @@ function dumpJson(guild, msg) {
   writeFile(
     join(OUTPUT_JSON_DIRECTORY, OUTPUT_JSON_FILENAME),
     JSON.stringify(outputJson, null, OUTPUT_JSON_INDENT_SIZE),
-    (error) => { onFileWritten(error, msg) }
+    (error) => { onFileWritten(error, msg, startTime) }
   );
 }
 
