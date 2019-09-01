@@ -1,0 +1,27 @@
+{
+  "name": "bug-free-enigma",
+  "version": "1.0.0",
+  "description": "",
+  "main": "run.js",
+  "scripts": {
+    "add": "node -r esm -r dotenv/config add.js",
+    "run": "node -r esm -r dotenv/config run.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/sustained/bug-free-enigma.git"
+  },
+  "keywords": [],
+  "author": "sustained <sustained.dissonance@gmail.com> (https://sustained.name/)",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/sustained/bug-free-enigma/issues"
+  },
+  "homepage": "https://github.com/sustained/bug-free-enigma#readme",
+  "dependencies": {
+    "discord.js": "^11.5.1",
+    "dotenv": "^8.1.0",
+    "esm": "^3.2.25",
+    "open": "^6.4.0"
+  }
+}
