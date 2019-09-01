@@ -89,16 +89,16 @@ client.on("message", msg => {
 
   msg
     .reply("JSON dump initiated. Please keep your extremities within the vehicle during transit.")
-    .then((reply) => dumpJson(msg.guild, reply))
+    .then(() => dumpJson(msg.guild, msg))
 });
 
-async function onFileWritten(error, reply) {
+async function onFileWritten(error, msg) {
   if (error) {
     console.error(error);
-    return reply.edit("An error occured while writing the JSON to disc, please check the console.");
+    return msg.reply("An error occured while writing the JSON to disc, please check the console.");
   }
 
-  await reply.edit(`Written to disc as ${OUTPUT_JSON_FILENAME}. Thank you for flying with Sustained Airways.`);
+  await msg.reply(`Written to disc as ${OUTPUT_JSON_FILENAME}. Thank you for flying with Sustained Airways.`);
 
   client.destroy();
 }
@@ -115,7 +115,7 @@ function buildMember(member) {
   return memberData;
 }
 
-function dumpJson(guild, reply) {
+function dumpJson(guild, msg) {
   if ( ! guild.available) {
     // Probably can't happen since we managed to process the initiating command, but hey.
     return console.error("Discord outage!");
@@ -134,7 +134,7 @@ function dumpJson(guild, reply) {
   writeFile(
     join(OUTPUT_JSON_DIRECTORY, OUTPUT_JSON_FILENAME),
     JSON.stringify(outputJson, null, OUTPUT_JSON_INDENT_SIZE),
-    (error) => { onFileWritten(error, reply) }
+    (error) => { onFileWritten(error, msg) }
   );
 }
 
