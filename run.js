@@ -92,7 +92,7 @@ client.on("message", msg => {
   dumpJson(msg.guild, reply);
 });
 
-async function onFileWritten(error) {
+async function onFileWritten(error, reply) {
   if (error) {
     console.error(error);
     return reply.edit("An error occured while writing the JSON to disc, please check the console.");
@@ -132,7 +132,7 @@ function dumpJson(guild, reply) {
   writeFile(
     join(OUTPUT_JSON_DIRECTORY, OUTPUT_JSON_FILENAME),
     JSON.stringify(outputJson, null, OUTPUT_JSON_INDENT_SIZE),
-    onFileWritten
+    (error) => { onFileWritten(error, reply) }
   );
 }
 
