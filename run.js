@@ -87,9 +87,9 @@ client.on("message", msg => {
     return msg.reply("You are not the chosen one.");
   }
 
-  const reply = msg.reply("JSON dump initiated. Please keep your extremities within the vehicle during transit.");
-
-  dumpJson(msg.guild, reply);
+  msg
+    .reply("JSON dump initiated. Please keep your extremities within the vehicle during transit.")
+    .then((reply) => dumpJson(msg.guild, reply))
 });
 
 async function onFileWritten(error, reply) {
