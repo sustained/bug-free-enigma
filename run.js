@@ -106,7 +106,9 @@ async function onFileWritten(error, reply) {
 function buildMember(member) {
   let memberData = Object.assign({}, USER_OBJECT_TEMPLATE);
 
-  const roles = member.roles.map((role) => role.name);
+  const roles = member.roles
+    .filter((role) => ROLE_IDS.includes(role.id))
+    .map((role) => role.name);
   const { username, discriminator } = member.user;
   memberData.discord = { roles, username, discriminator };
 
